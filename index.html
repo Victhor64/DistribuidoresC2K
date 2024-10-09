@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat C2K para distribuidores</title>
     <style>
-        /* Estilos existentes */
+        /* Estilos generales */
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -40,7 +40,7 @@
             align-items: center;
             margin-top: 50px;
             width: 100%;
-            max-width: 1200px; /* Limitar el ancho máximo para mejor apariencia */
+            max-width: 1200px;
             padding: 0 20px;
             box-sizing: border-box;
         }
@@ -64,36 +64,45 @@
             border-radius: 5px;
             box-shadow: 3px 3px 0 #FFA500;
             transition: all 0.3s;
-            flex: 1 1 200px; /* Flexibilidad para responsividad */
+            flex: 1 1 calc(50% - 20px);
             max-width: 200px;
             text-align: center;
+            box-sizing: border-box;
         }
         .button:hover {
             background-color: #808080;
             box-shadow: 1px 1px 0 #FFA500;
             transform: translate(2px, 2px);
         }
+
+        /* Estilos para el botón "Cerrar" modificado */
         .floating-btn {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 100px;
+            top: 100px;
+            left: 30px;
+            width: 40px;
             height: 40px;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
-            background-color: #a0a0a0;
-            color: white;
-            border: 2px solid #FFA500;
-            border-radius: 5px;
-            box-shadow: 3px 3px 0 #FFA500;
+            background-color: #d3d3d3;
+            color: #333333;
+            border: 2px solid #FF0000;
+            border-radius: 50%;
+            box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
             transition: all 0.3s;
             z-index: 1002;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
         }
         .floating-btn:hover {
-            background-color: #808080;
-            box-shadow: 1px 1px 0 #FFA500;
-            transform: translate(2px, 2px);
+            background-color: #cccccc;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            transform: translate(1px, 1px);
         }
+
+        /* Estilos para los overlays */
         #overlay, #submenu-overlay {
             display: none;
             position: fixed;
@@ -113,6 +122,7 @@
             box-sizing: border-box;
             overflow-y: auto;
             border-radius: 10px;
+            position: relative;
         }
         #iframe-container {
             width: 80%;
@@ -120,7 +130,8 @@
             height: 80%;
             max-height: 600px;
         }
-        /* Nuevos estilos para la ventana de submenú */
+
+        /* Estilos para el submenú */
         #submenu-container {
             display: flex;
             flex-direction: column;
@@ -141,16 +152,16 @@
             height: auto;
         }
         .submenu-button-container {
-            display: grid;
-            grid-template-columns: repeat(2, 200px); /* Dos columnas de 200px cada una */
+            display: flex;
+            flex-wrap: wrap;
             gap: 10px;
-            justify-content: center; /* Centra las columnas en el contenedor */
+            justify-content: center;
             width: 100%;
             margin-top: 20px;
         }
         .submenu-button {
-            width: 200px; /* Ancho similar a los botones principales */
-            height: 70px; /* Alto similar a los botones principales */
+            width: calc(50% - 20px);
+            height: 70px;
             margin: 5px;
             padding: 0 10px;
             font-size: 16px;
@@ -165,6 +176,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             text-align: center;
+            box-sizing: border-box;
         }
         .submenu-button:hover {
             background-color: #808080;
@@ -187,25 +199,56 @@
                 max-height: 400px;
             }
             .submenu-button-container {
-                grid-template-columns: repeat(2, 1fr); /* Mantener dos columnas */
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
                 max-width: 400px;
             }
             .submenu-button {
-                width: 100%;
+                width: calc(50% - 20px);
                 max-width: 200px;
             }
         }
 
         @media (max-width: 600px) {
+            /* Ajuste para que los contenedores ocupen el 80% de la ventana */
+            #iframe-container,
+            #submenu-container {
+                width: 80%;
+                height: 80%;
+                max-width: none;
+                max-height: none;
+            }
+            /* Ajuste de los botones del submenú */
             .submenu-button-container {
-                grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
-                max-width: 300px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                justify-content: center;
+                max-width: 100%;
             }
             .submenu-button {
-                width: 100%; /* Botones ocupan todo el ancho disponible */
-                max-width: 200px;
+                width: 100%;
+                max-width: 100%;
+                padding: 10px;
+            }
+            /* Ajuste de los botones principales */
+            .button {
+                flex: 1 1 90%;
+                max-width: 100%;
+            }
+            /* Ajuste del botón flotante */
+            .floating-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+                left: 20px;
             }
         }
+
+        /* Estilos para el Chatbot */
+        /* No se necesita modificar ya que se integrará mediante scripts */
     </style>
 </head>
 <body>
@@ -232,12 +275,14 @@
         </div>
     </div>
 
-    <button id="main-close-btn" class="floating-btn" onclick="window.close()">Cerrar</button>
+    <!-- Botón "Cerrar" Principal Modificado -->
+    <button id="main-close-btn" class="floating-btn" onclick="window.close()" title="Cerrar">✕</button>
 
+    <!-- Overlays -->
     <div id="overlay">
         <div id="iframe-container">
             <iframe id="content-frame" src=""></iframe>
-            <button class="floating-btn" onclick="closeOverlay()">Cerrar</button>
+            <button class="floating-btn" onclick="closeOverlay()" title="Cerrar" style="top: 10px; left: 10px; position: absolute;">✕</button>
         </div>
     </div>
 
@@ -247,16 +292,16 @@
                 <img src="https://control2000.com.mx/imagenes/general/Lc2k_500.png" alt="Logo C2K" class="submenu-logo">
             </div>
             <div class="submenu-button-container">
-                <button class="submenu-button" onclick="openNewTab('https://chat.openai.com/share/g-sH6n2kLYa-asesor-gpt-para-sistema-contafiscal-c2k')">Asesor GPT Contafiscal C2K</button>
-                <button class="submenu-button" onclick="openNewTab('https://chat.openai.com/share/g-8mJOeDsMw-asesor-gpt-para-sistema-nomina-c2k')">Asesor GPT Nomina C2K</button>
-                <button class="submenu-button" onclick="openNewTab('https://chat.openai.com/share/g-XXXXXXX-asesor-gpt-administrador-c2k')">Asesor GPT Administrador C2K</button>
+                <button class="submenu-button" onclick="openNewTab('https://chatgpt.com/g/g-sH6n2kLYa-asesor-gpt-para-sistema-contafiscal-c2k')">Asesor GPT Contafiscal C2K</button>
+                <button class="submenu-button" onclick="openNewTab('https://chatgpt.com/g/g-8mJOeDsMw-asesor-gpt-para-sistema-nomina-c2k')">Asesor GPT Nomina C2K</button>
+                <button class="submenu-button" onclick="openNewTab('https://chatgpt.com/g/g-yd5I9g6Up-asesor-gpt-para-sistema-administrador-c2k')">Asesor GPT Administrador C2K</button>
                 <button class="submenu-button" disabled>Reservado</button>
                 <button class="submenu-button" disabled>Reservado</button>
                 <button class="submenu-button" disabled>Reservado</button>
                 <button class="submenu-button" disabled>Reservado</button>
                 <button class="submenu-button" disabled>Reservado</button>
             </div>
-            <button class="floating-btn" onclick="closeSubmenu()">Atrás</button>
+            <button class="floating-btn" onclick="closeSubmenu()" title="Atrás" style="top: 10px; left: 10px; position: absolute;">✕</button>
         </div>
     </div>
 
@@ -282,14 +327,26 @@
 
         function closeSubmenu() {
             document.getElementById('submenu-overlay').style.display = 'none';
-            document.getElementById('main-close-btn').style.display = 'block';
+            document.getElementById('main-close-btn').style.display = 'flex';
         }
 
         function closeOverlay() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('content-frame').src = '';
-            document.getElementById('main-close-btn').style.display = 'block';
+            document.getElementById('main-close-btn').style.display = 'flex';
         }
+
+        // Manejar eventos de teclado para cerrar overlays con la tecla "Esc"
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                if (document.getElementById('submenu-overlay').style.display === 'flex') {
+                    closeSubmenu();
+                }
+                if (document.getElementById('overlay').style.display === 'flex') {
+                    closeOverlay();
+                }
+            }
+        });
     </script>
 </body>
 </html>
